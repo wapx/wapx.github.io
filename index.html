@@ -6,7 +6,10 @@
     <title>Hello, AMPs</title>
     <link rel="canonical" href="https://amp.dev/documentation/guides-and-tutorials/start/create/basic_markup/">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-     <script type="application/ld+json">
+     
+  <script src="js/jquery.js"></script>
+     
+<script type="application/ld+json">
       {
         "@context": "http://schema.org",
         "@type": "NewsArticle",
@@ -16,9 +19,13 @@
           "logo.jpg"
         ]
       }
-    </script>
-    <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+$("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap styles -->
     <link
       rel="stylesheet"
@@ -28,248 +35,118 @@
     />
     <!-- Generic page styles -->
     <style>
-      body {
-        padding-top: 60px;
-      }
-      @media (max-width: 767px) {
-        .description {
-          display: none;
-        }
-      }
+      
+body {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+.div-push {
+  width: 10px;
+  height: 100vh;
+  background: red;
+}
     </style>
     
  </head>
   <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button
-            type="button"
-            class="navbar-toggle"
-            data-toggle="collapse"
-            data-target=".navbar-fixed-top .navbar-collapse"
-          >
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a
-            class="navbar-brand"
-            href="https://wapx.github.io"
-            >wapx.github.io</a
-          >
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="https://wapx.github.io/download"
-                >Download</a
-              >
-            </li>
-            <li>
-              <a href="https://wapx.github.io/source/"
-                >Source Code</a
-              >
-            </li>
-           
-        </ul>
-        </div>
+ 
+<div class="d-flex" id="wrapper">
+  <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
       </div>
     </div>
-    <div class="container">
-      <h1>jQuery File Upload Demo</h1>
-      <blockquote class="description">
-        <p>
-          File Upload widget with multiple file selection, drag&amp;drop
-          support, progress bars, validation and preview images, audio and video
-          for jQuery.<br />
-          Supports cross-domain, chunked and resumable file uploads and
-          client-side image resizing.<br />
-          Works with any server-side platform (PHP, Python, Ruby on Rails, Java,
-          Node.js, Go etc.) that supports standard HTML form file uploads.
-        </p>
-      </blockquote>
-      <!-- The file upload form used as target for the file upload widget -->
-      <form
-        id="fileupload"
-        action="https://jquery-file-upload.appspot.com/"
-        method="POST"
-        enctype="multipart/form-data"
-      >
-     <div
-              class="progress progress-striped active"
-              role="progressbar"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              <div
-                class="progress-bar progress-bar-success"
-                style="width:0%;"
-              ></div>
-            </div>
-            <!-- The extended global progress state -->
-            <div class="progress-extended">&nbsp;</div>
-          </div>
-        </div>
-        <!-- The table listing the files available for upload/download -->
-        <table role="presentation" class="table table-striped">
-          <tbody class="files"></tbody>
-        </table>
-      </form>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Demo Notes</h3>
-        </div>
-        <div class="panel-body">
-          <ul>
-            <li>
-              The maximum file size for uploads in this demo is
-              <strong>999 KB</strong> (default file size is unlimited).
+  <div class="div-push"></div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li>
-              Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in
-              this demo (by default there is no file type restriction).
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
             </li>
-            <li>
-              Uploaded files will be deleted automatically after
-              <strong>5 minutes or less</strong> (demo files are stored in
-              memory).
-            </li>
-            <li>
-              You can <strong>drag &amp; drop</strong> files from your desktop
-              on this webpage (see
-              <a
-                href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support"
-                >Browser support</a
-              >).
-            </li>
-            <li>
-              Please refer to the
-              <a href="https://github.com/blueimp/jQuery-File-Upload"
-                >project website</a
-              >
-              and
-              <a href="https://github.com/blueimp/jQuery-File-Upload/wiki"
-                >documentation</a
-              >
-              for more information.
-            </li>
-            <li>
-              Built with the
-              <a href="https://getbootstrap.com/">Bootstrap</a> CSS framework
-              and Icons from <a href="https://glyphicons.com/">Glyphicons</a>.
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
             </li>
           </ul>
         </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1 class="mt-4">Simple Sidebar</h1>
+        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
+        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
       </div>
     </div>
-    <!-- The blueimp Gallery widget -->
-    <div
-      id="blueimp-gallery"
-      class="blueimp-gallery blueimp-gallery-controls"
-      data-filter=":even"
-    >
-      <div class="slides"></div>
-      <h3 class="title"></h3>
-      <a class="prev">‹</a>
-      <a class="next">›</a>
-      <a class="close">×</a>
-      <a class="play-pause"></a>
-      <ol class="indicator"></ol>
-    </div>
-    <!-- The template to display files available for upload -->
-    <script id="template-upload" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-          <tr class="template-upload fade">
-              <td>
-                  <span class="preview"></span>
-              </td>
-              <td>
-                  {% if (window.innerWidth > 480 || !o.options.loadImageFileTypes.test(file.type)) { %}
-                      <p class="name">{%=file.name%}</p>
-                  {% } %}
-                  <strong class="error text-danger"></strong>
-              </td>
-              <td>
-                  <p class="size">Processing...</p>
-                  <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-              </td>
-              <td>
-                  {% if (!o.options.autoUpload && o.options.edit && o.options.loadImageFileTypes.test(file.type)) { %}
-                    <button class="btn btn-success edit" data-index="{%=i%}" disabled>
-                        <i class="glyphicon glyphicon-edit"></i>
-                        <span>Edit</span>
-                    </button>
-                  {% } %}
-                  {% if (!i && !o.options.autoUpload) { %}
-                      <button class="btn btn-primary start" disabled>
-                          <i class="glyphicon glyphicon-upload"></i>
-                          <span>Start</span>
-                      </button>
-                  {% } %}
-                  {% if (!i) { %}
-                      <button class="btn btn-warning cancel">
-                          <i class="glyphicon glyphicon-ban-circle"></i>
-                          <span>Cancel</span>
-                      </button>
-                  {% } %}
-              </td>
-          </tr>
-      {% } %}
-    </script>
-    <!-- The template to display files available for download -->
-    <script id="template-download" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-          <tr class="template-download fade">
-              <td>
-                  <span class="preview">
-                      {% if (file.thumbnailUrl) { %}
-                          <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                      {% } %}
-                  </span>
-              </td>
-              <td>
-                  {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
-                      <p class="name">
-                          {% if (file.url) { %}
-                              <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                          {% } else { %}
-                              <span>{%=file.name%}</span>
-                          {% } %}
-                      </p>
-                  {% } %}
-                  {% if (file.error) { %}
-                      <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-                  {% } %}
-              </td>
-              <td>
-                  <span class="size">{%=o.formatFileSize(file.size)%}</span>
-              </td>
-              <td>
-                  {% if (file.deleteUrl) { %}
-                      <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                          <i class="glyphicon glyphicon-trash"></i>
-                          <span>Delete</span>
-                      </button>
-                      <input type="checkbox" name="delete" value="1" class="toggle">
-                  {% } else { %}
-                      <button class="btn btn-warning cancel">
-                          <i class="glyphicon glyphicon-ban-circle"></i>
-                          <span>Cancel</span>
-                      </button>
-                  {% } %}
-              </td>
-          </tr>
-      {% } %}
-    </script>
-    <script
-      src="js/jquery.js"
-      integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    ></script>
-    <![endif]-->
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
   </body>
 </html>
