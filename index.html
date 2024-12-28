@@ -1,94 +1,120 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
 <title>Js Tester</title>
+<script src="jquery.js"></script>
 <style>
-html,body{
-background:#b0b0b0;
-color:#d0d0d0;
+:root{
+color:blue;
+--bg: #707070;
+background-color: var(--bg);
+}
+:root:has(#dark:checked){
+--bg: #000;
+color:orange;
+}
+#dark{
+display: none;
+}
+.dark{
+display:block;
+position:fixed;left:0;top:5px;
+z-index:9;padding:4px;margin:0;
+background:#000;
+color:orange;
+border:2px solid orange;
+border-radius:0 0 0 2px;
+}
+:root{
+margin:0;padding:0;
 box-sizing:border-box;
+}
+.title{
+display:block;
+position:fixed;left:35%;top:5px;
+z-index:9;padding:4px;margin:0;
+color:orange;
+}
+html,body{
 text-align:center;
+width:100%;
+height:100%;
+box-sizing:border-box;
 padding:0;
 margin:0;
 }
-
-.iframe{
+#view{
 width:100%;
+height:100%;
+box-sizing:border-box;
 padding:0;
 margin:0;
-}
-iframe{
-width:100%;
-height:22em;
-padding:0;
-margin:0;
+margin-top:40px;
 border:none;
-border-bottom:1px solid #ccc;
+border-top:2px solid orange;
 }
-button{
-background:#d0d0d0;
-padding:4px 10px;
+#edit{
+box-sizing:border-box;
+font-family: sans-serif;
+font-size:0.9rem;
+position:fixed;
+top:150px;left:0;
+width:100%;
+height:35%;
+text-align:justyfi;
+background:#101010;
+padding:0 10px;
 margin:0;
-border:1px solid #777;
+color:orange;
+border:2px solid orange;
 }
-.note{
-text-align:left;
-padding:10px;
-margin:0;
-color:#0b0b0b;
+.btn{
+display:block;
+position:fixed;right:0;top:5px;
+z-index:9;padding:4px;margin:0;
+background:#000;
+color:orange;
+border:2px solid orange;
+border-radius:0 0 0 2px;
 }
-.text{
-position:sticky;
-background:#0d0d0d;
-left:0;top:0;
-z-index:1;
-padding:5px;
-margin:0;
-color:#d0d0d0;
-}
-.footer{
-padding:4px;
-margin:0;
-color:#0b0b0b;
-}
+#edit{display:block;}
+#show,#show:checked~#edit{display:none;}
 </style>
 <script src="jquery.js"></script>
 </head><body>
+<label for="dark" class="dark">Dark</label>
+<input id="dark" type="checkbox">
+<label class="title">Html Editor</label>
+<input type=checkbox id="show">
+<label for="show" class="btn">Hide</label>
 
-<label class="iframe">
-<iframe id="view"></iframe>
-<div class="note">
-<button>copy</button> ~ jquery is on this page</div>
-</label>
-
-<textarea id="input" rows="10" cols="40" class="text">
-&lt;style&gt;
-body{padding:0;margin:0;color:red;}
-&lt;/style&gt;
-
-&lt;p&gt;IF THIS SHOW! JQUERY NOT SUPORTED&lt;/p&gt;
-
-&lt;script&gt;
-$.get(&quot;./README.md&quot;,function(data){
-$(&quot;p&quot;).html(data);});
-&lt;/script&gt;
+<iframe id="view" ></iframe>
+<textarea id="edit">
 
 </textarea>
- <script>
-var doc='<!DOCTYPE html><html lang="eb"><head>';
-var meta='<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">';
-var title='<script src="jquery.js"><\/script></head><body>';
-var foot='</body></html>';
-$("button").click(function(){
-$("textarea").select();
-document.execCommand('copy');});
-$("#input").on("keyup", function(){
-this.style.height = "auto";
-this.style.height = this.scrollHeight + 10 + "px";
-var value = doc+meta+title+$( this ).val()+foot ;
-$("#view").attr("srcdoc",value);
-}).trigger("keyup");
+
+<script>
+function edit(edit){
+var dt1='<!DOCTYPE html><html lang="en"><head>';
+var dt2='<meta name="viewport" content="width=device-width,';
+var dt3='initial-scale=1.0, maximum-scale=1.0, user-scalable=no,';
+var dt4='shrink-to-fit=no"><script src="jquery.js"><\/script></head>';
+var dt5='<body>'; 
+var dt6='<\/body><\/html>';
+$("#view").prop("srcdoc",dt1+dt2+dt3+dt4+dt5+edit+dt6);
+}
+$("#edit").on("keyup",function(){
+edit($(this).val());
+});
+$(window).on("load",function(){
+edit("<script>$('body').load('sample1.txt');<\/script>");
+$.get("sample1.txt",function(data){
+$("#edit").text(data);});
+});
+var rw = $(window).width();
+$(".root").css("width",rw+"px");
+var rh = $(window).height()-40;
+$(".root").css("height",rh+"px");
 </script>
-<div class="footer"><h4>&copy; AndiGo</h4></div>
 </body>
 </html>
