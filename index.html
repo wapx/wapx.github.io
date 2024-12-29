@@ -107,8 +107,8 @@ $("#edit").on("keyup",function(){
 edit($(this).val());
 });
 $(window).on("load",function(){
-edit("<script>$('body').load('sample1.txt');<\/script>");
-$.get("sample1.txt",function(data){
+edit("<script>$('body').load('https://js3k.github.io/sample1.txt');<\/script>");
+$.get("https://js3k.github.io/sample1.txt",function(data){
 $("#edit").text(data);});
 });
 var rw = $(window).width();
@@ -117,4 +117,4 @@ var rh = $(window).height()-40;
 $(".root").css("height",rh+"px");
 </script>
 </body>
-</html>
+</html> 
