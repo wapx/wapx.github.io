@@ -1,120 +1,58 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-<title>Js Tester</title>
-<script src="jquery.js"></script>
+<title>Js Editor</title>
+<link rel="icon" href="/favicon.ico">
 <style>
-:root{
-color:blue;
---bg: #707070;
-background-color: var(--bg);
+:root,html,body{margin:0;padding:0;background:silver;
+box-sizing:border-box;width:100%;height:100%;
 }
-:root:has(#dark:checked){
---bg: #000;
-color:orange;
+#res{margin:0;padding:0;background:silver;
+box-sizing:border-box;width:100%;height:95%;
 }
-#dark{
-display: none;
+#inp{box-sizing:border-box;position:fixed;left:0;bottom:0;
+width:100%;height:40%;background:;
+border:1px solid #000;
 }
-.dark{
-display:block;
-position:fixed;left:0;top:5px;
-z-index:9;padding:4px;margin:0;
-background:#000;
-color:orange;
-border:2px solid orange;
-border-radius:0 0 0 2px;
-}
-:root{
-margin:0;padding:0;
-box-sizing:border-box;
-}
-.title{
-display:block;
-position:fixed;left:35%;top:5px;
-z-index:9;padding:4px;margin:0;
-color:orange;
-}
-html,body{
-text-align:center;
-width:100%;
-height:100%;
-box-sizing:border-box;
-padding:0;
-margin:0;
-}
-#view{
-width:100%;
-height:100%;
-box-sizing:border-box;
-padding:0;
-margin:0;
-margin-top:40px;
-border:none;
-border-top:2px solid orange;
-}
-#edit{
-box-sizing:border-box;
-font-family: sans-serif;
-font-size:0.9rem;
-position:fixed;
-top:150px;left:0;
-width:100%;
-height:35%;
-text-align:justyfi;
-background:#101010;
-padding:0 10px;
-margin:0;
-color:orange;
-border:2px solid orange;
-}
-.btn{
-display:block;
-position:fixed;right:0;top:5px;
-z-index:9;padding:4px;margin:0;
-background:#000;
-color:orange;
-border:2px solid orange;
-border-radius:0 0 0 2px;
-}
-#edit{display:block;}
-#show,#show:checked~#edit{display:none;}
 </style>
-<script src="jquery.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
 </head><body>
-<label for="dark" class="dark">Dark</label>
-<input id="dark" type="checkbox">
-<label class="title">Html Editor</label>
-<input type=checkbox id="show">
-<label for="show" class="btn">Hide</label>
 
-<iframe id="view" ></iframe>
-<textarea id="edit">
-
-</textarea>
-
+<input style="display:none"  id="sh" type="checkbox"/checked>
+<iframe id="res" srcdoc=""></iframe>
+<iframe id="inp" src="text.html"onload="on(this)"></iframe>
 <script>
-function edit(edit){
-var dt1='<!DOCTYPE html><html lang="en"><head>';
-var dt2='<meta name="viewport" content="width=device-width,';
-var dt3='initial-scale=1.0, maximum-scale=1.0, user-scalable=no,';
-var dt4='shrink-to-fit=no"><script src="jquery.js"><\/script></head>';
-var dt5='<body>'; 
-var dt6='<\/body><\/html>';
-$("#view").prop("srcdoc",dt1+dt2+dt3+dt4+dt5+edit+dt6);
+function on(){
+var htmlArea = $("#inp").contents().find("#html")[0];
+var cssArea=$("#inp").contents().find("#css")[0];
+var jsArea=$("#inp").contents().find("#js")[0];
+var resultHtml=document.getElementById('res').attributes.getNamedItem('srcdoc');
+var jq='';
+var closeTag='<\/';
+var befHead='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">';
+var befCss='<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><style type="text/css">';
+var aftCss=closeTag+'style>';
+var befHtml='<title>result title'+closeTag+'title>'+closeTag+'head><body>';
+var befJs='<script  src="./jquery.js"><\/script><script>';
+var aftJs=closeTag+'script>'+closeTag+'body>'+closeTag+'html>';
+resultHtml.value='test';
+
+function run(){
+resultHtml.value=befHead+befCss+cssArea.value+aftCss+befHtml+htmlArea.value+jq+befJs+jsArea.value+aftJs;
+};
+function sh(){
+jq=(this.checked?'<script  src="./jquery.js"><\/script>':'');
+run()
+};
+$(htmlArea).on("keyup",run);
+$(cssArea).on("keyup",run);
+$(jsArea).on("keyup",run);
+$("#sh").on('change',sh);
+sh.call($("#sh"));
 }
-$("#edit").on("keyup",function(){
-edit($(this).val());
-});
-$(window).on("load",function(){
-edit("<script>$('body').load('https://js3k.github.io/sample1.txt');<\/script>");
-$.get("https://js3k.github.io/sample1.txt",function(data){
-$("#edit").text(data);});
-});
-var rw = $(window).width();
-$(".root").css("width",rw+"px");
-var rh = $(window).height()-40;
-$(".root").css("height",rh+"px");
+window.onbeforeunload = function(){
+return "Dude, are you sure you want to leave? Think of the kittens!";
+}
 </script>
 </body>
-</html> 
+</html>
