@@ -3,31 +3,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
 <title>Js Editor</title>
 <link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 :root,html,body{margin:0;padding:0;background:silver;
 box-sizing:border-box;width:100%;height:100%;
 }
-#res{margin:0;padding:0;background:silver;
-box-sizing:border-box;width:100%;height:95%;
+#res{display:flex;margin:0;padding:0;background:silver;
+box-sizing:border-box;width:100%;height:100%;
 }
-#inp{box-sizing:border-box;position:fixed;left:0;bottom:0;
-width:100%;height:40%;background:;
+#inp{display:flex;box-sizing:border-box;position:fixed;left:0;bottom:0;
+width:100%;height:50%;background:;
 border:1px solid #000;
+transition:height 1s;
+transition-timing-function: linear;
+}
+.btn{box-sizing:border-box;position:fixed;top:10%;right:4px;font-size:28px;opacity:0.4;
+padding:5px;margin:0;}
+#sh:checked~#inp{
+height:0;
 }
 </style>
 <script type="text/javascript" src="jquery.js"></script>
 </head><body>
+<label for="sh"class="btn"><i class="fa fa-eye" aria-hidden="true"></i></label>
+<input style="position:fixed;left:0;bottom:0;display:none" id="sh" type="checkbox">
 
-<input style="display:none"  id="sh" type="checkbox"/checked>
 <iframe id="res" srcdoc=""></iframe>
 <iframe id="inp" src="text.html"onload="on(this)"></iframe>
 <script>
+
 function on(){
 var htmlArea = $("#inp").contents().find("#html")[0];
 var cssArea=$("#inp").contents().find("#css")[0];
 var jsArea=$("#inp").contents().find("#js")[0];
-var resultHtml=document.getElementById('res').attributes.getNamedItem('srcdoc');
-var jq='';
 var closeTag='<\/';
 var befHead='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">';
 var befCss='<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><style type="text/css">';
@@ -35,20 +43,13 @@ var aftCss=closeTag+'style>';
 var befHtml='<title>result title'+closeTag+'title>'+closeTag+'head><body>';
 var befJs='<script  src="./jquery.js"><\/script><script>';
 var aftJs=closeTag+'script>'+closeTag+'body>'+closeTag+'html>';
-resultHtml.value='test';
-
 function run(){
-resultHtml.value=befHead+befCss+cssArea.value+aftCss+befHtml+htmlArea.value+jq+befJs+jsArea.value+aftJs;
-};
-function sh(){
-jq=(this.checked?'<script  src="./jquery.js"><\/script>':'');
-run()
+$("#res")[0].srcdoc=befHead+befCss+cssArea.value+aftCss+befHtml+htmlArea.value+befJs+jsArea.value+aftJs;
 };
 $(htmlArea).on("keyup",run);
 $(cssArea).on("keyup",run);
 $(jsArea).on("keyup",run);
-$("#sh").on('change',sh);
-sh.call($("#sh"));
+run.call();
 }
 window.onbeforeunload = function(){
 return "Dude, are you sure you want to leave? Think of the kittens!";
@@ -56,3 +57,6 @@ return "Dude, are you sure you want to leave? Think of the kittens!";
 </script>
 </body>
 </html>
+
+
+
