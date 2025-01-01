@@ -8,7 +8,7 @@
 :root,html,body{margin:0;padding:0;background:silver;
 box-sizing:border-box;width:100%;height:100%;
 }
-#res{display:flex;margin:0;padding:0;background:silver;
+#res{margin:0;padding:0;background:silver;
 box-sizing:border-box;width:100%;height:100%;
 }
 #inp{display:flex;box-sizing:border-box;position:fixed;left:0;bottom:0;
@@ -23,26 +23,56 @@ padding:5px;margin:0;}
 height:0;
 }
 </style>
-<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 </head><body>
 <label for="sh"class="btn"><i class="fa fa-eye" aria-hidden="true"></i></label>
 <input style="position:fixed;left:0;bottom:0;display:none" id="sh" type="checkbox">
 
 <iframe id="res" srcdoc=""></iframe>
-<iframe id="inp" src="text.html"onload="on(this)"></iframe>
+<textarea id="hide" cols="0" rows="0"style="display:none">
+&lt;!DOCTYPE html&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no&quot;&gt;
+&lt;title&gt;Js Editor&lt;/title&gt;&lt;style&gt;
+:root{box-sizing:border-box;
+width:1000px;height:100%;margin:0;padding:0;
+background:#f0f0f0;
+}
+html{box-sizing:border-box;display:flex;
+width:100%;height:100%;margin:0;padding:0;
+}
+body{display:flex;box-sizing:border-box;
+width:100%;height:100%;margin:0;padding:0;
+box-sizing:border-box;
+}
+textarea{display:flex;box-sizing:border-box;
+padding:10px;margin:0;width:35%;height:100%;
+background:#303030;color:coral;
+font-family: Arial, Helvetica, sans-serif;
+border:10px solid #000;resizable:true;
+}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;textarea id=&quot;html&quot;&gt;
+&lt;h1&gt;HTML / CSS / JS  EDITOR&lt;/h1&gt;
+&lt;p&gt;Design Website On live Preview&lt;/p&gt;
+&lt;/textarea&gt;&lt;textarea id=&quot;css&quot;&gt;
+body{background-color:#f4fff;}&lt;/textarea&gt;
+&lt;textarea id=&quot;js&quot;&gt;$(&apos;h1&apos;).css({color:&apos;green&apos;});
+$(&apos;p&apos;).css({color:&apos;#000&apos;});&lt;/textarea&gt;
+&lt;/body&gt;&lt;/html&gt;
+</textarea>
+<iframe class="texto" id="inp" srcdoc="" onload="on(this)"></iframe>
 <script>
-
+$("#inp").attr("srcdoc",$("#hide").text());
 function on(){
 var htmlArea = $("#inp").contents().find("#html")[0];
 var cssArea=$("#inp").contents().find("#css")[0];
 var jsArea=$("#inp").contents().find("#js")[0];
-var closeTag='<\/';
 var befHead='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">';
 var befCss='<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"><style type="text/css">';
-var aftCss=closeTag+'style>';
-var befHtml='<title>result title'+closeTag+'title>'+closeTag+'head><body>';
-var befJs='<script  src="./jquery.js"><\/script><script>';
-var aftJs=closeTag+'script>'+closeTag+'body>'+closeTag+'html>';
+var aftCss='<\/style>';
+var befHtml='<title>result title<\/title><\/head><body>';
+var befJs='<script  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"><\/script><script>';
+var aftJs='<\/script><\/body><\/html>';
 function run(){
 $("#res")[0].srcdoc=befHead+befCss+cssArea.value+aftCss+befHtml+htmlArea.value+befJs+jsArea.value+aftJs;
 };
